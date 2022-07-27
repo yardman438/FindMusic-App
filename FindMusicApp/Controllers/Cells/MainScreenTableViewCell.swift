@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class MainScreenTableViewCell: UITableViewCell {
     
@@ -113,41 +114,37 @@ class MainScreenTableViewCell: UITableViewCell {
         self.selectionStyle = .none
         
         self.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.top.leading.bottom.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+        }
+        
         containerView.addSubview(albumLogo)
+        albumLogo.snp.makeConstraints { make in
+            make.centerY.equalTo(containerView.snp.centerY)
+            make.leading.equalTo(containerView.snp.leading)
+            make.height.width.equalTo(120)
+        }
+        
         containerView.addSubview(albumNameLabel)
+        albumNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(containerView.snp.top).offset(10)
+            make.leading.equalTo(albumLogo.snp.trailing).offset(10)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-15)
+        }
+        
         containerView.addSubview(artistNameLabel)
+        artistNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(albumNameLabel.snp.bottom).offset(10)
+            make.leading.equalTo(albumLogo.snp.trailing).offset(10)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-15)
+        }
+        
         containerView.addSubview(trackCountLabel)
-        
-        NSLayoutConstraint.activate([
-            containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            containerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 20)
-        ])
-        
-        NSLayoutConstraint.activate([
-            albumLogo.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            albumLogo.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 0),
-            albumLogo.heightAnchor.constraint(equalToConstant: 120),
-            albumLogo.widthAnchor.constraint(equalToConstant: 110)
-        ])
-        
-        NSLayoutConstraint.activate([
-            albumNameLabel.leadingAnchor.constraint(equalTo: albumLogo.trailingAnchor, constant: 10),
-            albumNameLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
-            albumNameLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10)
-        ])
-        
-        NSLayoutConstraint.activate([
-            artistNameLabel.leadingAnchor.constraint(equalTo: albumLogo.trailingAnchor, constant: 10),
-            artistNameLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
-            artistNameLabel.topAnchor.constraint(equalTo: albumNameLabel.bottomAnchor, constant: 10)
-        ])
-        
-        NSLayoutConstraint.activate([
-            trackCountLabel.leadingAnchor.constraint(equalTo: albumLogo.trailingAnchor, constant: 10),
-            trackCountLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
-            trackCountLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10)
-        ])
+        trackCountLabel.snp.makeConstraints { make in
+            make.leading.equalTo(albumLogo.snp.trailing).offset(10)
+            make.bottom.equalTo(containerView.snp.bottom).offset(-10)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-15)
+        }
     }
 }

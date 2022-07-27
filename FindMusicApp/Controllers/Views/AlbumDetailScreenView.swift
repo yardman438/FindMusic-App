@@ -6,15 +6,15 @@
 //
 
 import UIKit
+import SnapKit
 
 class AlbumDetailScreenView: UIView {
 
     let albumLogo: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
         imageView.image = UIImage(named: "emptyAlbumLogo")
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 40
+        imageView.layer.cornerRadius = 16
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor(named: "totalBlack")?.cgColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,9 +25,9 @@ class AlbumDetailScreenView: UIView {
         let label = UILabel()
         label.text = "Album name"
         label.textColor = UIColor(named: "totalWhite")
-        label.font = UIFont.systemFont(ofSize: 36, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 21, weight: .bold)
         label.numberOfLines = 2
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -36,7 +36,7 @@ class AlbumDetailScreenView: UIView {
         let label = UILabel()
         label.text = "Artist"
         label.textColor = UIColor(named: "totalWhite")
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -45,7 +45,7 @@ class AlbumDetailScreenView: UIView {
         let label = UILabel()
         label.text = "Release date"
         label.textColor = UIColor(named: "totalWhite")
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -54,7 +54,7 @@ class AlbumDetailScreenView: UIView {
         let label = UILabel()
         label.text = "16 tracks"
         label.textColor = UIColor(named: "brightBlue")
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -85,7 +85,6 @@ class AlbumDetailScreenView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         createSubviews()
-        setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -95,46 +94,38 @@ class AlbumDetailScreenView: UIView {
     private func createSubviews() {
         
         self.addSubview(albumLogo)
-        self.addSubview(backButton)
-        self.addSubview(moreButton)
+        albumLogo.snp.makeConstraints { make in
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(80)
+            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(20)
+            make.height.width.equalTo(150)
+        }
         
+        self.addSubview(backButton)
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
+            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(20)
+            make.height.width.equalTo(40)
+        }
+        
+        self.addSubview(moreButton)
+        moreButton.snp.makeConstraints { make in
+            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(20)
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-30)
+            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).offset(-20)
+            make.height.equalTo(60)
+        }
 
         stackView = UIStackView(arrangedSubviews: [albumNameLabel, artistNameLabel, releaseDateLabel, trackCountLabel],
                                 axis: .vertical,
                                 spacing: 10,
                                 distribution: .equalCentering)
-        stackView.alignment = .center
+        stackView.alignment = .leading
         self.addSubview(stackView)
-    }
-    
-    private func setConstraints() {
-        
-        NSLayoutConstraint.activate([
-            albumLogo.topAnchor.constraint(equalTo: self.topAnchor),
-            albumLogo.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            albumLogo.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
-            albumLogo.heightAnchor.constraint(equalToConstant: self.bounds.width)
-        ])
-        
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: albumLogo.bottomAnchor, constant: 20),
-            stackView.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
-            stackView.widthAnchor.constraint(equalToConstant: self.bounds.width),
-            albumNameLabel.widthAnchor.constraint(equalToConstant: 320)
-        ])
-        
-        NSLayoutConstraint.activate([
-            backButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            backButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            backButton.heightAnchor.constraint(equalToConstant: 40),
-            backButton.widthAnchor.constraint(equalToConstant: 40)
-        ])
-        
-        NSLayoutConstraint.activate([
-            moreButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            moreButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            moreButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -30),
-            moreButton.heightAnchor.constraint(equalToConstant: 60)
-        ])
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(80)
+            make.leading.equalTo(albumLogo.snp.trailing).offset(10)
+            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).offset(-20)
+            make.height.equalTo(150)
+        }
     }
 }

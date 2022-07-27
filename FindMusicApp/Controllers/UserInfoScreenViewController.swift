@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class UserInfoScreenViewController: UIViewController {
     
@@ -86,11 +87,10 @@ extension UserInfoScreenViewController {
                                 distribution: .fillProportionally)
         
         view.addSubview(stackView)
-        
-        NSLayoutConstraint.activate([
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-        ])
+        stackView.snp.makeConstraints { make in
+            make.centerY.equalTo(self.view.safeAreaLayoutGuide.snp.centerY)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(20)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-20)
+        }
     }
 }

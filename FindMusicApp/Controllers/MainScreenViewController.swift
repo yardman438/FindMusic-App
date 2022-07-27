@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class MainScreenViewController: UIViewController {
     
@@ -76,15 +77,12 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource, 
         tableView.dataSource = self
         
         view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.top.leading.bottom.trailing.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
         tableView.backgroundColor = UIColor(named: "totalBlack")
         tableView.separatorStyle = .none
-        
-        NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
-        ])
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

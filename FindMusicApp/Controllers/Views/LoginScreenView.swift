@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class LoginScreenView: UIView {
 
@@ -69,7 +70,7 @@ class LoginScreenView: UIView {
     let signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor(named: "lightgreen")?.cgColor
+        button.layer.borderColor = UIColor(named: "lightGreen")?.cgColor
         button.tintColor = UIColor(named: "lightGreen")
         button.setTitle("Sign up", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .medium)
@@ -84,7 +85,6 @@ class LoginScreenView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         createSubviews()
-        setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -92,61 +92,58 @@ class LoginScreenView: UIView {
     }
     
     private func createSubviews() {
-        self.addSubview(scrollView)
-        scrollView.addSubview(backgroundView)
         
-        backgroundView.addSubview(loginLabel)
+        self.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.top.leading.bottom.trailing.equalToSuperview()
+        }
+        
+        scrollView.addSubview(backgroundView)
+        backgroundView.snp.makeConstraints { make in
+            make.top.leading.bottom.trailing.equalTo(scrollView.safeAreaLayoutGuide)
+        }
         
         textFieldsStackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField],
                                           axis: .vertical,
                                           spacing: 10,
                                           distribution: .fillEqually)
         backgroundView.addSubview(textFieldsStackView)
+        textFieldsStackView.snp.makeConstraints { make in
+            make.centerY.equalTo(backgroundView.snp.centerY)
+            make.leading.equalTo(backgroundView.snp.leading).offset(20)
+            make.trailing.equalTo(backgroundView.snp.trailing).offset(-20)
+        }
         
+        emailTextField.snp.makeConstraints { make in
+            make.height.equalTo(60)
+        }
+        passwordTextField.snp.makeConstraints { make in
+            make.height.equalTo(60)
+        }
+        
+        backgroundView.addSubview(loginLabel)
+        loginLabel.snp.makeConstraints { make in
+            make.leading.equalTo(backgroundView.snp.leading).offset(20)
+            make.trailing.equalTo(backgroundView.snp.trailing).offset(-20)
+            make.bottom.equalTo(textFieldsStackView.snp.top).offset(-40)
+        }
+
         buttonsStackView = UIStackView(arrangedSubviews: [signInButton, signUpButton],
                                        axis: .vertical,
                                        spacing: 10,
                                        distribution: .fillEqually)
         backgroundView.addSubview(buttonsStackView)
-    }
-    
-    private func setConstraints() {
-        
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            scrollView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
-            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0)
-        ])
-        
-        NSLayoutConstraint.activate([
-            backgroundView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0),
-            backgroundView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor, constant: 0),
-            backgroundView.heightAnchor.constraint(equalTo: self.heightAnchor),
-            backgroundView.widthAnchor.constraint(equalTo: self.widthAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            textFieldsStackView.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-            textFieldsStackView.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
-            textFieldsStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 20),
-            textFieldsStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -20),
-            emailTextField.heightAnchor.constraint(equalToConstant: 60),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 60)
-        ])
-        
-        NSLayoutConstraint.activate([
-            loginLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 20),
-            loginLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -20),
-            loginLabel.bottomAnchor.constraint(equalTo: textFieldsStackView.topAnchor, constant: -40),
-        ])
-        
-        NSLayoutConstraint.activate([
-            buttonsStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 20),
-            buttonsStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -20),
-            buttonsStackView.topAnchor.constraint(equalTo: textFieldsStackView.bottomAnchor, constant: 20),
-            signInButton.heightAnchor.constraint(equalToConstant: 60),
-            signUpButton.heightAnchor.constraint(equalToConstant: 60)
-        ])
+        buttonsStackView.snp.makeConstraints { make in
+            make.top.equalTo(textFieldsStackView.snp.bottom).offset(20)
+            make.leading.equalTo(backgroundView.snp.leading).offset(20)
+            make.trailing.equalTo(backgroundView.snp.trailing).offset(-20)
+        }
+
+        signInButton.snp.makeConstraints { make in
+            make.height.equalTo(60)
+        }
+        signUpButton.snp.makeConstraints { make in
+            make.height.equalTo(60)
+        }
     }
 }

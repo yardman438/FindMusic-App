@@ -31,39 +31,40 @@ class LoginScreenViewController: UIViewController {
     //MARK: - Business logic
     
     @objc private func signInButtonTapped() {
-        //
-        //        let email = emailTextField.text ?? ""
-        //        let password = passwordTextField.text ?? ""
-        //        let user = findUser(email: email)
-        //
-        //        if user == nil {
-        //
-        //            loginLabel.text = "User is not found"
-        //            loginLabel.textColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
-        //
-        //        } else if user?.password == password {
-        //
-        //            let navigationController = UINavigationController(rootViewController: AlbumsViewController())
-        //            navigationController.modalPresentationStyle = .fullScreen
-        //            self.present(navigationController, animated: true)
-        //
-        //            guard let activeUser = user else { return }
-        //            DBService.shared.saveActiveUser(user: activeUser)
-        //
-        //        } else {
-        //
-        //            loginLabel.text = "Incorrect password"
-        //            loginLabel.textColor = #colorLiteral(red: 0.521568656, green: 0.1098039225, blue: 0.05098039284, alpha: 1)
-        //
-        //        }
-        let navigationController = UINavigationController(rootViewController: MainScreenViewController())
-        navigationController.modalPresentationStyle = .fullScreen
-        self.present(navigationController, animated: true)
+        
+        let email = loginScreenView.emailTextField.text ?? ""
+        let password = loginScreenView.passwordTextField.text ?? ""
+        let user = findUser(email: email)
+        
+        if user == nil {
+            
+            loginScreenView.loginLabel.text = "User is not found"
+                loginScreenView.loginLabel.textColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
+            
+        } else if user?.password == password {
+            
+            let navigationController = UINavigationController(rootViewController: MainScreenViewController())
+            navigationController.modalPresentationStyle = .fullScreen
+            self.present(navigationController, animated: true)
+            
+            guard let activeUser = user else { return }
+            UserDefaultsManager.shared.saveActiveUser(user: activeUser)
+            
+        } else {
+            
+            loginScreenView.loginLabel.text = "Incorrect password"
+            loginScreenView.loginLabel.textColor = #colorLiteral(red: 0.521568656, green: 0.1098039225, blue: 0.05098039284, alpha: 1)
+            
+        }
+        
+//        let navigationController = UINavigationController(rootViewController: MainScreenViewController())
+//        navigationController.modalPresentationStyle = .fullScreen
+//        self.present(navigationController, animated: true)
     }
     
     @objc private func signUpButtonTapped() {
-//        let signUpViewController = SignUpScreenViewController()
-//        self.present(signUpViewController, animated: true)
+        let signUpViewController = SignUpScreenViewController()
+        self.present(signUpViewController, animated: true)
     }
     
     private func findUser(email: String) -> User? {
