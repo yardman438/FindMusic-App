@@ -17,9 +17,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-        let navigationController = UINavigationController(rootViewController: LoginScreenViewController())
+//        let navigationController = UINavigationController(rootViewController: LoginScreenViewController())
+//        let navigationController = UINavigationController(rootViewController: SearchViewController())
 
-        window?.rootViewController = navigationController
+        window?.rootViewController = MainTabBarController()
         window?.makeKeyAndVisible()
+        window?.overrideUserInterfaceStyle = .dark
     }
 }

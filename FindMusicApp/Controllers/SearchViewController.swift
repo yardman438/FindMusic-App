@@ -8,11 +8,11 @@
 import UIKit
 import SnapKit
 
-class MainScreenViewController: UIViewController {
+class SearchViewController: UIViewController {
     
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(MainScreenTableViewCell.self, forCellReuseIdentifier: "AlbumCell")
+        tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "AlbumCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -21,7 +21,6 @@ class MainScreenViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "person.fill"), for: .normal)
         button.tintColor = UIColor(named: "totalWhite")
-        button.addTarget(MainScreenViewController.self, action: #selector(userInfoButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -69,7 +68,7 @@ class MainScreenViewController: UIViewController {
 
 //MARK: - TableView setup
 
-extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func setupTableView() {
         
@@ -90,7 +89,7 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath) as! MainScreenTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath) as! SearchTableViewCell
         let album = albums[indexPath.row]
         cell.configureAlbumCell(album: album)
         return cell
@@ -111,28 +110,35 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource, 
 
 //MARK: - NavigationBar setup
 
-extension MainScreenViewController {
+extension SearchViewController: UISearchBarDelegate {
     
     private func setupNavigationBar() {
         
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "Library"
         navigationItem.searchController = searchController
         
         let userInfoBarButton = UIBarButtonItem(customView: userInfoButton)
         navigationItem.rightBarButtonItem = userInfoBarButton
+        userInfoButton.addTarget(self, action: #selector(userInfoButtonTapped), for: .touchUpInside)
         
         let standardAppearance = UINavigationBarAppearance()
-        
+
         standardAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "totalWhite")!]
         standardAppearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "totalWhite")!]
         standardAppearance.configureWithOpaqueBackground()
         standardAppearance.backgroundColor = UIColor(named: "totalBlack")
-        
+
         self.navigationController?.navigationBar.standardAppearance = standardAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = standardAppearance
         
         setupSearchController()
+    }
+    
+    private func setupSearchController() {
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.tintColor = UIColor(named: "lightGreen")
+        searchController.searchBar.searchTextField.textColor = UIColor(named: "lightGreen")
+        searchController.obscuresBackgroundDuringPresentation = false
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -146,13 +152,5 @@ extension MainScreenViewController {
                 self.fetchAlbums(albumName: text)
             })
         }
-    }
-    
-    private func setupSearchController() {
-        searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "Search"
-        searchController.searchBar.tintColor = UIColor(named: "lightGreen")
-        searchController.searchBar.searchTextField.textColor = UIColor(named: "lightGreen")
-        searchController.obscuresBackgroundDuringPresentation = false
     }
 }

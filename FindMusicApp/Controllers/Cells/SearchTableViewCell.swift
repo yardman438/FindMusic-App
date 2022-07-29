@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MainScreenTableViewCell: UITableViewCell {
+class SearchTableViewCell: UITableViewCell {
     
     //MARK: - Interface elements init
     
@@ -36,6 +36,7 @@ class MainScreenTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "Album name"
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = UIColor(named: "totalBlack")
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -45,6 +46,7 @@ class MainScreenTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "Artist"
         label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = UIColor(named: "totalBlack")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

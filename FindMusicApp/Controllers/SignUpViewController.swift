@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SignUpScreenViewController: UIViewController {
+class SignUpViewController: UIViewController {
     
     var signUpScreenView = SignUpScreenView()
     
@@ -129,7 +129,7 @@ class SignUpScreenViewController: UIViewController {
 
 //MARK: - UITextField delegate
 
-extension SignUpScreenViewController: UITextFieldDelegate {
+extension SignUpViewController: UITextFieldDelegate {
     
     private func setupDelegate() {
         signUpScreenView.firstNameStackView.textField.delegate = self
@@ -199,7 +199,7 @@ extension SignUpScreenViewController: UITextFieldDelegate {
 
 //MARK: - Keybord show/hide
 
-extension SignUpScreenViewController {
+extension SignUpViewController {
     
     private func registerKeybordNotification() {
         

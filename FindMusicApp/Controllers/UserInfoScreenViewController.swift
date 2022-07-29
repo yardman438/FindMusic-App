@@ -14,6 +14,7 @@ class UserInfoScreenViewController: UIViewController {
         let label = UILabel()
         label.text = "First name:"
         label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = UIColor(named: "totalWhite")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -22,6 +23,7 @@ class UserInfoScreenViewController: UIViewController {
         let label = UILabel()
         label.text = "Second name:"
         label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = UIColor(named: "totalWhite")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -30,6 +32,7 @@ class UserInfoScreenViewController: UIViewController {
         let label = UILabel()
         label.text = "Age:"
         label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = UIColor(named: "totalWhite")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -38,6 +41,7 @@ class UserInfoScreenViewController: UIViewController {
         let label = UILabel()
         label.text = "Email:"
         label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = UIColor(named: "totalWhite")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -46,6 +50,7 @@ class UserInfoScreenViewController: UIViewController {
         let label = UILabel()
         label.text = "Phone number:"
         label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = UIColor(named: "totalWhite")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -67,11 +72,11 @@ class UserInfoScreenViewController: UIViewController {
         dateFormatter.dateFormat = "dd.MM.yyyy"
         let dateString = dateFormatter.string(from: activeUser.age)
         
-        firstNameLabel.text = activeUser.firstName
-        secondNameLabel.text = activeUser.secondName
-        ageLabel.text = dateString
-        phoneLabel.text = activeUser.phone
-        emailLabel.text = activeUser.email
+        firstNameLabel.text = "First name: \(activeUser.firstName)"
+        secondNameLabel.text = "Second name: \(activeUser.secondName)"
+        ageLabel.text = "Age: \(dateString)"
+        phoneLabel.text = "Phone number: \(activeUser.phone)"
+        emailLabel.text = "Email: \(activeUser.email)"
     }
 }
 
@@ -79,7 +84,7 @@ extension UserInfoScreenViewController {
     
     private func setupInterface() {
         title = "UserInfo"
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "totalBlack")
         
         stackView = UIStackView(arrangedSubviews: [firstNameLabel, secondNameLabel, ageLabel, phoneLabel, emailLabel],
                                 axis: .vertical,
@@ -88,9 +93,8 @@ extension UserInfoScreenViewController {
         
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.centerY.equalTo(self.view.safeAreaLayoutGuide.snp.centerY)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(20)
             make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(20)
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-20)
         }
     }
 }

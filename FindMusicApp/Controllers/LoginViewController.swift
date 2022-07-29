@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginScreenViewController: UIViewController {
+class LoginViewController: UIViewController {
     
     var loginScreenView = LoginScreenView()
     
@@ -43,7 +43,7 @@ class LoginScreenViewController: UIViewController {
             
         } else if user?.password == password {
             
-            let navigationController = UINavigationController(rootViewController: MainScreenViewController())
+            let navigationController = UINavigationController(rootViewController: SearchViewController())
             navigationController.modalPresentationStyle = .fullScreen
             self.present(navigationController, animated: true)
             
@@ -56,14 +56,10 @@ class LoginScreenViewController: UIViewController {
             loginScreenView.loginLabel.textColor = #colorLiteral(red: 0.521568656, green: 0.1098039225, blue: 0.05098039284, alpha: 1)
             
         }
-        
-//        let navigationController = UINavigationController(rootViewController: MainScreenViewController())
-//        navigationController.modalPresentationStyle = .fullScreen
-//        self.present(navigationController, animated: true)
     }
     
     @objc private func signUpButtonTapped() {
-        let signUpViewController = SignUpScreenViewController()
+        let signUpViewController = SignUpViewController()
         self.present(signUpViewController, animated: true)
     }
     
@@ -83,7 +79,7 @@ class LoginScreenViewController: UIViewController {
 
 //MARK: - UITextField delegate
 
-extension LoginScreenViewController: UITextFieldDelegate {
+extension LoginViewController: UITextFieldDelegate {
     
     private func setupDelegate() {
         loginScreenView.emailTextField.delegate = self
@@ -99,7 +95,7 @@ extension LoginScreenViewController: UITextFieldDelegate {
 
 //MARK: - Keybord show/hide
 
-extension LoginScreenViewController {
+extension LoginViewController {
     
     private func registerKeybordNotification() {
         
@@ -132,7 +128,7 @@ extension LoginScreenViewController {
 
 //MARK: - Setup interface
 
-extension LoginScreenViewController {
+extension LoginViewController {
     
     //The main func for an interface setup
     private func setupInterface() {
